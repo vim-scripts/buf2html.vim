@@ -1,0 +1,23 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=2384
+
+This is the next evolution of the script formerly known as "code2html.vim" and before that "2html.vim" (the latter being still a part of the standard Vim release runtime collection). See http://www.vim.org/scripts/script.php?script_id=330.
+
+This is considered beta-quality code at this time.
+
+Accomplished goals (so far) for this release include:
+
+  * Let it produce correct output for all option variants including with/out-line-numbering, with/out-using-css, etc.
+
+ * Try to create an HTML comment line that records the SHA1 sum for the buffer data input. Could be useful in future scenarios.
+
+ * Clean up the markup so that interstitial spaces in code (not being purposely verbose here, I don't know what else to call them right now) between highlighted identifiers is *not* marked up with redundant default bg/fg color specifiers. This is a huge weakness of the original script.
+
+ * Create a visible symbolic (and easily understood) markup in the output when the source is a Makefile, to display where each TAB (ascii \011) was.
+
+Left to do is more debugging; at least 1 known bug exists in that an occasional character will disappear from the output ;-(. And optimization.  And restoring the functionality that was once working in the script in its previous incarnation as code2html.vim, working out a list of system-installed mono fonts and including those in the CSS style declaration.
+
+This script was developed to meet the author's needs. It might not meet yours. If you can improve on it without clobbering the author's needs, however, your patches are welcome. In any event, the customary legalese-ish disclaimer about "FITNESS FOR ANY PURPOSE" applies.
+
+The result of running this script on itself can be viewed at http://intrepid.perlmonk.org/apropos.vim/buf2html/current/myself.html
+
+As always, credit to Bram Moolenaar and David Nečas (Yeti) for the original script and Christian Hujer for his later contribution.
