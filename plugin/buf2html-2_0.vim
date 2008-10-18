@@ -15,13 +15,13 @@
 "       (modified by David Nečas (Yeti) <yeti@physics.muni.cz>)       *
 " --------------------------------------------------------------------*
 
-" Last modified: 27 Sep 2008 07:23:33
+" Last modified: 18 Oct 2008 17:37:41 EDT
 " Last edited on: highbottom
-" Version: ('VIM Online' versioning scheme): 2.0b1
-"     internal version: 2.0_beta1
+" Version: ('VIM Online' versioning scheme): 2.0b2
+"     internal version: 2.0_beta2
 
 " ---------------------------------------------------------------------
-" Usage:  :source buf2html.vim
+" Usage:  :[<various settings>] | source buf2html.vim
 " Options:
 "       The following global ("g:") variables can be used to configure
 "        the script's output. 'b2h_use_css' should nearly always be
@@ -503,10 +503,12 @@ while s:lnum <= s:end
  " Speed loop (it's small - that's the trick)
    " Go along till we find a change in synID
       while s:col <= s:len && s:id == synID(s:lnum, s:col, 1) | let s:col = s:col + 1 | endwhi
-      let backedup = s:col
-      while ' ' == matchstr(getline(s:lnum), '.\{' . backedup . '}\zs.')|let backedup -= 1|endwhi
+      let s:backedup = s:col
+      if ' ' == matchstr(getline(s:lnum), '.\{' . -1 + s:backedup . '}\zs.')
+          while ' ' == matchstr(getline(s:lnum), '.\{' . s:backedup . '}\zs.')|let s:backedup -= 1|endwhi
+      endi
 
-      let nonblank = ( backedup < s:col ? backedup : s:col )
+      let nonblank = ( s:backedup < s:col ? s:backedup : s:col )
 
    " Output the text with the same synID, with class set to c{s:id}
       let s:id = synIDtrans(s:id)
@@ -516,9 +518,9 @@ while s:lnum <= s:end
 	  \ '\&quot;', 'g'), "\x0c", '<hr class="page-break">', 'g'), "\x09", s:TAB_Repr, 'g')
 	  \ . '</span>'
 
-      while backedup < s:col
+      while s:backedup < s:col
 	  let s:new = s:new . ' '
-	  let backedup += 1
+	  let s:backedup += 1
       endwhi
    " Add the class to class list if it's not there yet
       if stridx(s:idlist, "," . s:id . ",") == -1
